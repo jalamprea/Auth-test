@@ -1,0 +1,24 @@
+{
+  "name": "medullan-test-auth",
+  "version": "1.0.0",
+  "description": "Auth Library for Medullan Test",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run rest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jalamprea/Auth-test.git"
+  },
+  "keywords": [
+    "Medullan",
+    "Auth",
+    "Test"
+  ],
+  "author": "Julian Lamprea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jalamprea/Auth-test/issues"
+  },
+  "homepage": "https://github.com/jalamprea/Auth-test#readme"
+}
