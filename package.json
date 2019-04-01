@@ -4,7 +4,10 @@
   "description": "Auth Library for Medullan Test",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm run rest"
+    "test": "./node_modules/mocha/bin/_mocha test/"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "repository": {
     "type": "git",
@@ -20,5 +23,15 @@
   "bugs": {
     "url": "https://github.com/jalamprea/Auth-test/issues"
   },
-  "homepage": "https://github.com/jalamprea/Auth-test#readme"
+  "homepage": "https://github.com/jalamprea/Auth-test#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "mongoose": "^5.4.19",
+    "mongoose-unique-validator": "^2.0.2",
+    "password-rules": "0.0.3"
+  }
 }
