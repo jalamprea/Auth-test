@@ -27,7 +27,7 @@ describe('app.registerUser(email, password)', function() {
 
     expect(newUser).to.have.property('_id');
 
-    app.deleteUser(userEmail);
+    await app.deleteUser(userEmail);
   });
 });
 
@@ -39,11 +39,11 @@ describe('app.userLogin(email, password)', function(){
 
     const newUser = await app.registerUser(userEmail, userPass);
       
-    const loggedUser = await app.loginFromRequest(requestTest);
+    const loggedUser = await app.loginUserRequest(requestTest);
 
     expect(loggedUser).to.have.property('_id');
 
-    app.deleteUser(userEmail);
+    await app.deleteUser(userEmail);
     
   });
 });
@@ -58,17 +58,17 @@ describe('app.userLogin(email, password)', function(){
     // try one
     requestTest.body.password = getRandomPassword();
     console.log('TRY ONE', requestTest.body.password);
-    await app.loginFromRequest(requestTest).catch(console.error);
+    await app.loginUserRequest(requestTest).catch(console.error);
 
     // try two
     requestTest.body.password = getRandomPassword();
     console.log('TRY TWO', requestTest.body.password);
-    await app.loginFromRequest(requestTest).catch(console.error);
+    await app.loginUserRequest(requestTest).catch(console.error);
 
     // try three
     requestTest.body.password = getRandomPassword();
     console.log('TRY THREE', requestTest.body.password);
-    const loggedUser = await app.loginFromRequest(requestTest).catch(console.error);
+    const loggedUser = await app.loginUserRequest(requestTest).catch(console.error);
 
     // expect(loggedUser).to.not.have.property('_id');
     expect(loggedUser).to.be.undefined;
@@ -92,7 +92,7 @@ describe('app.userLogin(email, password)', function(){
         requestTest.body.email = 'hello' + getRandomPassword() + '@test.com';
         console.log('Try %d', index, requestTest.body.email);
         index++;
-        response = await app.loginFromRequest(requestTest);
+        response = await app.loginUserRequest(requestTest);
       } catch(ex) {
         response = ex.message;
       }
@@ -102,7 +102,7 @@ describe('app.userLogin(email, password)', function(){
 
     expect(response).to.have.string('Locked');
 
-    app.deleteUser(userEmail);
+    await app.deleteUser(userEmail);
     
   });
 });

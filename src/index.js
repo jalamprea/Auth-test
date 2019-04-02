@@ -21,7 +21,7 @@ function deleteUser(email) {
 };
 
 //
-function loginFromRequest(request) {
+function loginUserRequest(request) {
   return new Promise((resolve, reject) => {
 
     const done = function(error) {
@@ -54,7 +54,7 @@ function loginFromRequest(request) {
 
 // Public functions:
 module.exports = {
-  loginFromRequest,
+  loginUserRequest,
   deleteUser,
   registerUser
 }

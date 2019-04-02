@@ -26,6 +26,7 @@ const UserSchema = new Schema({
     lastLock: Date,
     lastAttempt: Date,
 
+    // Login Attempts counter, reseted after a valid login
     attempts: {
         type: Number,
         default: 0
@@ -37,7 +38,7 @@ UserSchema.plugin(uniqueValidator, {message: 'User is already registered.'});
 UserSchema.pre('save', function(next) {
     if(!this.createdAt) {
         this.createdAt = new Date();
-        
+
         // Hashed password in DB
         this.password = crypto.createHash('md5').update(this.password).digest("hex")
     }

@@ -27,6 +27,7 @@ async function lockRequest(requestSignature) {
   // lockout minutes to milliseconds
   const millisecondsTime = lockoutPolicyOptions.lockoutTime * 60000;
 
+  // once a lock is generated, add a timeout to remove the lockout after a period time.
   setTimeout(function(){
     delete requestLocked[requestSignature];
   }, millisecondsTime);

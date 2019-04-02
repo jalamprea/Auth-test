@@ -10,13 +10,13 @@ const LockoutPolicySchema = new Schema({
     default: 20
   },
 
-  // max attempts for the same user
+  // max attempts for the same username
   maxUserAttempts: {
     type: Number,
     default: 3
   },
 
-  // Attempts regardless of the username, only for the same request signature
+  // Max Attempts regardless of the username, only for the same Request Signature
   maxRequestAttempts: {
     type: Number,
     default: 13
