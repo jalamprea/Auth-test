@@ -45,7 +45,7 @@ Contains all rules defined as a Policy to be applied to User Passwords. Each pol
 
 
 ## Object Models
-Although I have not used ES6 classes, I have created the library based on the same concepts, exposing public methods/functions and keeping internal functions as private per each module.
+Although I have not used ES6 classes, this library is based on the same concepts, exposing public methods/functions and keeping internal functions as private per each module.
 
 
 ### index
