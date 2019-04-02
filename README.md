@@ -7,6 +7,7 @@ NodeJS library to complete requirements for the Medullan Code Test.
 - The separation of jurisdictions and countries per each application instance means that each Instance run as a separated process with the respective environment vars, so, the variable COUNTRY_INSTANCE should always defined por each country. by default it is "USA".
 - This library doesn't handle any Graphic User Interface, so it receive everything as parameters and return messages or conditions, nothing implemented in UI.
 - The request object used on the login function is a standard HTTP Request Object, with the headers and body attributes accesible, so all functions will use that attributes from the request.
+- The login function returns a JWT with a Session Expiration time, but this library doesn't include functions to check that JWT expiration time since the Test Code doesn't especificate it
 
 
 ## Installation

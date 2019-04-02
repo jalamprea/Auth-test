@@ -3,7 +3,7 @@ const LockoutPolicy = require('../models/LockoutPolicy');
 const instanceName = process.env.COUNTRY_INSTANCE || 'USA';
 
 // in-memory/no-scalable cache storage for lockouts...
-// it should be replaed with redis, or db, or something similar for production.
+// TODO: it should be replaced with redis, or db, or something similar for production.
 const requestAttemptsLocks = {};
 const requestLocked = {};
 

@@ -1,7 +1,14 @@
-const User = require('../models/User');
+'use strict';
+const fs     = require('fs');
+const User   = require('../models/User');
 const crypto = require('crypto');
+const jwt    = require('jsonwebtoken');
 const LockoutPolicy = require('../models/LockoutPolicy');
-const instanceName = process.env.COUNTRY_INSTANCE || 'USA';
+const instanceName  = process.env.COUNTRY_INSTANCE || 'USA';
+const ISSUER = 'MyHealthPass';
+
+// Private key for JWT
+const JWTSecretKey = fs.readFileSync('./keys/private.key', 'utf8');
 
 let lockoutPolicyOptions = null;
 
@@ -13,7 +20,8 @@ let lockoutPolicyOptions = null;
       instance: instanceName,
       lockoutTime: 20,
       maxUserAttempts: 3,
-      maxRequestAttempts: 13
+      maxRequestAttempts: 13,
+      expireTimeMinutes: 15
     };
     lockoutPolicyOptions = await LockoutPolicy.create(newLockout);
   }
@@ -42,13 +50,18 @@ module.exports = function(email, password) {
           user.attempts = 0;
           await user.save();
 
-          let returnedUser = user.toObject({ getters: true });
-
-          // Remove uneeded data on response:
-          delete returnedUser.password;
-          delete returnedUser.__v;
-
-          resolve(returnedUser);
+          // Generate a JWT with expire session time
+          const payload = {
+            user: user.email
+          };
+          const signOptions = {
+            issuer: ISSUER,
+            subject: user.email,
+            expiresIn: lockoutPolicyOptions.expireTimeMinutes * 60, // expire time defined in the lockout policies
+            algorithm: "RS256"
+          };
+          const userToken = jwt.sign(payload, JWTSecretKey, signOptions);
+          resolve(userToken);
         } else {
           
           user.lastAttempt = new Date();

@@ -33,8 +33,8 @@ function loginUserRequest(request) {
       let email = request.body.email;
       let passwd = request.body.password;
 
-      loginUser(email, passwd).then(user => {
-        resolve(user);
+      loginUser(email, passwd).then(token => {
+        resolve(token);
       }).catch(async exception => {
         let policyResult = await LockoutPolicy.addInvalidRequest(request);
         if (policyResult) {

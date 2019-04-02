@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const PasswordPolicy = require('../models/PasswordPolicy');
-const passwordRules = require('password-rules');
-const instanceName = process.env.COUNTRY_INSTANCE || 'USA';
+const passwordRules  = require('password-rules');
+const instanceName   = process.env.COUNTRY_INSTANCE || 'USA';
 
 let passwordPolicyOptions = null;
 

@@ -22,6 +22,11 @@ const LockoutPolicySchema = new Schema({
     default: 13
   },
 
+  expireTimeMinutes: {
+    type: Number,
+    default: 20
+  },
+
   instance: {
      type: String,
      required: true

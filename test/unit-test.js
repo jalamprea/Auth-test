@@ -41,12 +41,14 @@ describe('app.userLogin(email, password)', function(){
       
     const loggedUser = await app.loginUserRequest(requestTest);
 
-    expect(loggedUser).to.have.property('_id');
+    // expect jwt
+    expect(loggedUser).to.have.string('.');
 
     await app.deleteUser(userEmail);
     
   });
 });
+
 
 
 describe('app.userLogin(email, password)', function(){
@@ -70,13 +72,13 @@ describe('app.userLogin(email, password)', function(){
     console.log('TRY THREE', requestTest.body.password);
     const loggedUser = await app.loginUserRequest(requestTest).catch(console.error);
 
-    // expect(loggedUser).to.not.have.property('_id');
     expect(loggedUser).to.be.undefined;
 
     await app.deleteUser(userEmail);
     
   });
 });
+
 
 
 describe('app.userLogin(email, password)', function(){
