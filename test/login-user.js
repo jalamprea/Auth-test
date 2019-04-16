@@ -18,19 +18,6 @@ const requestTest = {
     };
 
 
-// Register User Test
-describe('app.registerUser(email, password)', function() {
-
-  it('Register user with email and password', async function() {
-
-    const newUser = await app.registerUser(userEmail, userPass);
-
-    expect(newUser).to.have.property('_id');
-
-    await app.deleteUser(userEmail);
-  });
-});
-
 
 // Simple one login test
 describe('app.userLogin(email, password)', function(){
@@ -50,30 +37,35 @@ describe('app.userLogin(email, password)', function(){
 });
 
 
-
+// Bad password 3 times:
 describe('app.userLogin(email, password)', function(){
 
-  it('Block user because of bad password', async function() {
+  it('Block user because of bad password three times', async function() {
 
+    
     const newUser = await app.registerUser(userEmail, userPass);
+
+    const noop = function(err){ console.error(err.toString()) };
 
     // try one
     requestTest.body.password = getRandomPassword();
     console.log('TRY ONE', requestTest.body.password);
-    await app.loginUserRequest(requestTest).catch(console.error);
+    await app.loginUserRequest(requestTest).catch(noop);
 
     // try two
     requestTest.body.password = getRandomPassword();
     console.log('TRY TWO', requestTest.body.password);
-    await app.loginUserRequest(requestTest).catch(console.error);
+    await app.loginUserRequest(requestTest).catch(noop);
 
     // try three
     requestTest.body.password = getRandomPassword();
     console.log('TRY THREE', requestTest.body.password);
-    const loggedUser = await app.loginUserRequest(requestTest).catch(console.error);
-
-    expect(loggedUser).to.be.undefined;
-
+    try {
+      await app.loginUserRequest(requestTest);
+    } catch(ex) {
+      noop(ex);
+      expect(ex.toString()).contains('Locked');
+    }
     await app.deleteUser(userEmail);
     
   });
@@ -81,24 +73,27 @@ describe('app.userLogin(email, password)', function(){
 
 
 
+// Block Request Signature
 describe('app.userLogin(email, password)', function(){
 
-  it('Block requests no matter the username', async function() {
+  it('Block request signature no matter the username', async function() {
 
     const newUser = await app.registerUser(userEmail, userPass);
       
     let response = '';
     let index = 1;
+
+    // make attempts until get a Block
     do {
       try {
         requestTest.body.email = 'hello' + getRandomPassword() + '@test.com';
-        console.log('Try %d', index, requestTest.body.email);
+        // console.log('Try %d', index, requestTest.body.email);
         index++;
         response = await app.loginUserRequest(requestTest);
       } catch(ex) {
         response = ex.message;
       }
-      console.log('Response:', response);
+      // console.log('Response:', response);
       
     } while(response.indexOf('Locked')<0);
 
