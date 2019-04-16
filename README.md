@@ -19,9 +19,9 @@ To install and test this library, clone it from repository or download and compr
 npm install
 ```
 
-Before run the project, it is needed to have MongoDB as a database installed on your system.
+Before run the project, it is needed to have MongoDB Database installed on your system.
 You can set your own Mongo URI String connection by setting up the environment var MONGO_URI.
-If this variables is not present, the project will try to connect to a default database on localhost by using the default string: mongodb://127.0.0.1/medullan-auth-test
+If this env var is not available, the project will try to connect to a default database on localhost by using the default string: mongodb://127.0.0.1/medullan-auth-test
 
 ## Test
 
