@@ -35,17 +35,17 @@ function loginUserRequest(request) {
 
       loginUser(email, passwd).then(token => {
         resolve(token);
-      }).catch(async exception => {
+      }).catch(async userException => {
         let policyResult = await LockoutPolicy.addInvalidRequest(request);
         if (policyResult) {
           reject(policyResult);
         } else {
-          reject(exception);
+          reject(userException);
         }
       });
     };
 
-    // function call with callback, for middleware style
+    // Policy call with callback, for middleware style
     LockoutPolicy.validateRequest(request, done);
 
   });

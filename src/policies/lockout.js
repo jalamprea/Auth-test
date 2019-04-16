@@ -73,21 +73,28 @@ function validateRequest(request, next) {
 async function addInvalidRequest(request) {
   const requestSignature = getRequestSignature(request);
 
+  // if this signature is the first attempt to be locked
   if (!requestAttemptsLocks[requestSignature]) {
     requestAttemptsLocks[requestSignature] = [{
       attempt: 1,
       time: new Date()
     }];
   } else {
+    // get counter of attemps for this signature
     let requestAttempts = requestAttemptsLocks[requestSignature];
+
+    // load Policy options from database, just in case it is not ready yet
     await getPolicyOptions();
+
+    // Add extra counter for attempts
     requestAttempts.push({
       attempt: requestAttempts.length+1,
       time: new Date()
     });
 
-    // when we have more than maxRequestAttempts (13 by default...)
+    // Check if there are more than maxRequestAttempts (13 by default...)
     if (requestAttempts.length >= lockoutPolicyOptions.maxRequestAttempts) {
+      
       // get times to check the latest 13 attempts:
       const firstAttempt = requestAttempts[ lockoutPolicyOptions.maxRequestAttempts-1 ].time.getTime();
       const lastAttempt = requestAttempts[requestAttempts.length-1].time.getTime();
@@ -98,8 +105,7 @@ async function addInvalidRequest(request) {
         lockRequest(requestSignature);
         return new Error('Your Request has been Locked! Please try again in '+lockoutPolicyOptions.lockoutTime+' minutes');
       }
-    }    
-    // requestAttemptsLocks[requestSignature] = requestAttempts;
+    }
   }
 
   return false;
