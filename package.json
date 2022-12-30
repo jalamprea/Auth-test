@@ -26,7 +26,7 @@
   "homepage": "https://github.com/jalamprea/Auth-test#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.0.2"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
     "crypto": "^1.0.1",
